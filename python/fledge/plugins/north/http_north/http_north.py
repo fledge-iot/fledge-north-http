@@ -79,6 +79,7 @@ def plugin_info():
         'name': 'http',
         'version': '1.9.2',
         'type': 'north',
+        'mode': 'none',
         'interface': '1.0',
         'config': _DEFAULT_CONFIG
     }
