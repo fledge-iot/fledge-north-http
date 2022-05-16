@@ -10,6 +10,7 @@ import aiohttp
 import asyncio
 import json
 import logging
+import base64
 
 import numpy as np
 
@@ -131,17 +132,23 @@ class NumpyEncoder(json.JSONEncoder):
         # Let the base class default method raise the TypeError
         super(NumpyEncoder, self).default(obj)
 
+class NumpyEncoderBase64(json.JSONEncoder):
 
-def json_numpy_obj_hook(dct):
-    """Decodes a previously encoded numpy ndarray with proper shape and dtype.
+    def default(self, obj):
+        """If input object is an ndarray it will be converted into a dict 
+        holding dtype, shape and the data
+        """
+        if isinstance(obj, np.ndarray):
+            obj_data = np.ascontiguousarray(obj).data
+            data_list = base64.b64encode(obj_data)
+            if isinstance(data_list, bytes):
+                data_list = data_list.decode(encoding='UTF-8')
+            return dict(__ndarray__=data_list,
+                        dtype=str(obj.dtype),
+                        shape=obj.shape)
 
-    :param dct: (dict) json encoded ndarray
-    :return: (ndarray) if input was an encoded ndarray
-    """
-    if isinstance(dct, dict) and '__ndarray__' in dct:
-        return np.array(dct['__ndarray__'], dct['dtype']).reshape(dct['shape'])
-        # return np.frombuffer(data, dct['dtype']).reshape(dct['shape'])
-    return dct
+        # Let the base class default method raise the TypeError
+        super(NumpyEncoderBase64, self).default(obj)
 
 
 class HttpNorthPlugin(object):
@@ -164,7 +171,8 @@ class HttpNorthPlugin(object):
                 read["readings"] = p['reading']
                 for k,v in read['readings'].items():
                     if isinstance(v, np.ndarray):
-                        read['readings'][k] = json.dumps(v, cls=NumpyEncoder)
+                        serialized_data_base64 = json.dumps(v, cls=NumpyEncoderBase64)
+                        read['readings'][k] = serialized_data_base64
 
                 read["timestamp"] = p['user_ts']
                 payload_block.append(read)
