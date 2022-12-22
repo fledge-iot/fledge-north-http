@@ -45,10 +45,6 @@ To create a north task to send to another Fledge you should first create the |ht
 
     - **Verify SSL**: When HTTPS rather the HTTP is used this toggle allows for the verification of the certificate that is used. If a self signed certificate is used then this should not be enabled.
 
-    - **Apply Filter**: This allows a simple jq format filter rule to be applied to the connection. This should not be confused with Fledge filters and exists for backward compatibility reason only.
-
-    - **Filter Rule**: A jq filter rule to apply. Since the introduction of Fledge filters in the north task this has become deprecated and should not be used.
-
   - Click *Next*
 
   - Enable your task and click *Done*

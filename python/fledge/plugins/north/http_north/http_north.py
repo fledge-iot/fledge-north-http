@@ -49,7 +49,7 @@ _DEFAULT_CONFIG = {
          "description": "Source of data to be sent on the stream. May be either readings or statistics.",
          "type": "enumeration",
          "default": "readings",
-         "options": [ "readings", "statistics" ],
+         "options": ["readings", "statistics"],
          'order': '2',
          'displayName': 'Source'
     },
@@ -59,21 +59,6 @@ _DEFAULT_CONFIG = {
         "default": "false",
         'order': '3',
         'displayName': 'Verify SSL'
-    },
-    "applyFilter": {
-        "description": "Should filter be applied before processing data",
-        "type": "boolean",
-        "default": "false",
-        'order': '4',
-        'displayName': 'Apply Filter'
-    },
-    "filterRule": {
-        "description": "JQ formatted filter to apply (only applicable if applyFilter is True)",
-        "type": "string",
-        "default": ".[]",
-        'order': '5',
-        'displayName': 'Filter Rule',
-        "validity": "applyFilter == \"true\""
     }
 }
 
@@ -132,6 +117,7 @@ class NumpyEncoder(json.JSONEncoder):
         # Let the base class default method raise the TypeError
         super(NumpyEncoder, self).default(obj)
 
+
 class NumpyEncoderBase64(json.JSONEncoder):
 
     def default(self, obj):
@@ -169,7 +155,7 @@ class HttpNorthPlugin(object):
                 read = dict()
                 read["asset"] = p['asset_code']
                 read["readings"] = p['reading']
-                for k,v in read['readings'].items():
+                for k, v in read['readings'].items():
                     if isinstance(v, np.ndarray):
                         serialized_data_base64 = json.dumps(v, cls=NumpyEncoderBase64)
                         read['readings'][k] = serialized_data_base64
