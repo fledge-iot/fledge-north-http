@@ -59,21 +59,6 @@ _DEFAULT_CONFIG = {
         "default": "false",
         'order': '3',
         'displayName': 'Verify SSL'
-    },
-    "applyFilter": {
-        "description": "Should filter be applied before processing data",
-        "type": "boolean",
-        "default": "false",
-        'order': '4',
-        'displayName': 'Apply Filter'
-    },
-    "filterRule": {
-        "description": "JQ formatted filter to apply (only applicable if applyFilter is True)",
-        "type": "string",
-        "default": ".[]",
-        'order': '5',
-        'displayName': 'Filter Rule',
-        "validity": "applyFilter == \"true\""
     }
 }
 
