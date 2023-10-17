@@ -65,7 +65,7 @@ def test_plugin_contract():
 def test_plugin_info():
     assert http_north.plugin_info() == {
         'name': 'http',
-        'version': '2.1.0',
+        'version': '2.2.0',
         'type': 'north',
         'mode': 'none',
         'interface': '1.0',
