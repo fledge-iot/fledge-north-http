@@ -49,7 +49,7 @@ _DEFAULT_CONFIG = {
          "description": "Source of data to be sent on the stream. May be either readings or statistics.",
          "type": "enumeration",
          "default": "readings",
-         "options": ["readings", "statistics"],
+         "options": ["readings", "statistics", "audit"],
          'order': '2',
          'displayName': 'Source'
     },
