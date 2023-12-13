@@ -46,7 +46,7 @@ _DEFAULT_CONFIG = {
         'displayName': 'URL'
     },
     "source": {
-         "description": "Source of data to be sent on the stream. May be either readings or statistics.",
+         "description": "Source of data to be sent on the stream. May be either Readings, Statistics or Audit trails.",
          "type": "enumeration",
          "default": "readings",
          "options": ["readings", "statistics", "audit"],
