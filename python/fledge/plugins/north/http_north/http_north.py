@@ -66,7 +66,7 @@ _DEFAULT_CONFIG = {
 def plugin_info():
     return {
         'name': 'http',
-        'version': '2.4.0',
+        'version': '2.5.0',
         'type': 'north',
         'mode': 'none',
         'interface': '1.0',
