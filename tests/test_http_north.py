@@ -65,7 +65,7 @@ def test_plugin_contract():
 def test_plugin_info():
     assert http_north.plugin_info() == {
         'name': 'http',
-        'version': '3.0.0',
+        'version': '3.1.0',
         'type': 'north',
         'mode': 'none',
         'interface': '1.0',
@@ -118,9 +118,10 @@ async def test_plugin_send(loop):
     http_north.http_north = HttpNorthPlugin()
     http_north.http_north.event_loop = loop
     http_north.config = http_north._DEFAULT_CONFIG
-    with patch.object(http_north.http_north, '_send_payloads', return_value=mock_coro()) as patch_send_payload:
+    with patch.object(http_north.http_north, '_send_payloads', return_value=await mock_coro()) as patch_send_payload:
         is_data_sent, new_last_object_id, num_sent = await http_north.plugin_send(data=http_north.config, payload=payload, stream_id=3)
         assert (True, 20, 2) == (is_data_sent, new_last_object_id, num_sent)
+    patch_send_payload.assert_called_once()
 
 
 @pytest.mark.skip
